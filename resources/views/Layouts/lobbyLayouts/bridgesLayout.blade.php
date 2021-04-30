@@ -22,8 +22,7 @@
 <!-- if there are creation errors, they will show here -->
 
 
-	@yield("content");
-
+	@yield("content")
 
 
 

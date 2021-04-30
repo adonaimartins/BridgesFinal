@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Girder;
 use Illuminate\Http\Request;
+use Session;
+use Illuminate\Support\Facades\Redirect;
+use Symfony\Component\Console\Input\Input;
 
 class GirderController extends Controller
 {
@@ -14,7 +17,7 @@ class GirderController extends Controller
      */
     public function index()
     {
-        return view('forms.bridges.index', [ 'bridges' => Bridge::all()]);
+        return view('forms.girders.index', [ 'girders' => Girder::all()]);
     }
 
     /**
@@ -24,7 +27,7 @@ class GirderController extends Controller
      */
     public function create()
     {
-        return view('forms.bridges.create');
+        return view('forms.girders.create');
     }
 
     /**
@@ -35,28 +38,26 @@ class GirderController extends Controller
      */
     public function store(Request $request)
     {
-        $mileage_type = request('mileage_type');
 
-        if($mileage_type == "1" || $mileage_type == "2"){
 
-                $product = new Bridge();
-                $product->surveyor_name = request('surveyor_name');
-                $product->surveyor_lastName = request('surveyor_lastName');
-                $product->structure_name = request('structure_name');
-                $product->structure_location = request('structure_location');
-                $product->structure_number = request('structure_number');
+        if(request('elevation') != 'Select a elevation' && request('elevation') != 'Select a direction'){
 
-            if ($mileage_type == "1"){
-                $product->mileageMiles = (int) request('mileage');
-            } else if ($mileage_type == "2"){
-                $product->mileageYards = (int) request('mileage');
-            }
+            $product = new Girder();
+            $product->deck_id = session('deck');//correct with sessions
+            $product->girder_name = request('girder_name');
+            $product->girder_direction = request('girder_direction') == 1  ? 'LEFT' : 'RIGHT';
 
+            $product->elevation = request('elevation') == 1  ? 'INTERNALFACE' : 'EXTERNALFACE' ;
             $product->save();
         }
 
-        return redirect(route('bridges.index'));  
+        return redirect(route('girders.index'));  
     }
+
+
+
+
+
 
     /**
      * Display the specified resource.
@@ -64,10 +65,12 @@ class GirderController extends Controller
      * @param  \App\Models\Girder  $girder
      * @return \Illuminate\Http\Response
      */
-    public function show(Girder $girder)
+    public function show($girder)
     {
-        return view('forms.bridges.show', [
-            'bridge' => Bridge::findOrFail($bridge)
+        session(['girder' => $girder]);
+
+        return view('forms.girders.show', [
+            'girder' => Girder::findOrFail($girder)
         ]);
     }
 
@@ -77,9 +80,9 @@ class GirderController extends Controller
      * @param  \App\Models\Girder  $girder
      * @return \Illuminate\Http\Response
      */
-    public function edit(Girder $girder)
+    public function edit($girder)
     {
-        return view('forms.bridges.edit', [ 'bridge' => bridge::findOrFail($bridge)]);
+        return view('forms.girders.edit', [ 'girder' => Girder::findOrFail($girder)]);
     }
 
     /**
@@ -89,28 +92,22 @@ class GirderController extends Controller
      * @param  \App\Models\Girder  $girder
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Girder $girder)
+    public function update(Request $request, $girder)
     {
         $mileage_type = request('mileage_type');
 
-        if($mileage_type == "1" || $mileage_type == "2"){
+        if(request('elevation') != 'Select a elevation' && request('elevation') != 'Select a direction'){
 
-                $product = new Bridge();
-                $product->surveyor_name = request('surveyor_name');
-                $product->surveyor_lastName = request('surveyor_lastName');
-                $product->structure_name = request('structure_name');
-                $product->structure_location = request('structure_location');
-                $product->structure_number = request('structure_number');
+            $product = Girder::findOrFail($girder);
+            $product->deck_id = session('deck');//correct with sessions
+            $product->girder_name = request('girder_name');
+            $product->girder_direction = request('girder_direction') == 1  ? 'LEFT' : 'RIGHT';
 
-            if ($mileage_type == "1"){
-                $product->mileageMiles = (int) request('mileage');
-            } else if ($mileage_type == "2"){
-                $product->mileageYards = (int) request('mileage');
-            }
+            $product->elevation = request('elevation') == 1  ? 'INTERNALFACE' : 'EXTERNALFACE' ;
+            $product->update();
 
-            $product->save();
-            Session::flash('message', 'Successfully updated bridge!');
-            return Redirect::to('bridges');
+            Session::flash('message', 'Successfully updated girder!');
+            return Redirect::to('girders');
         }
     }
 
@@ -120,22 +117,13 @@ class GirderController extends Controller
      * @param  \App\Models\Girder  $girder
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Girder $girder)
+    public function destroy($girder)
     {
-        $bridge = Bridge::findOrFail($bridge);
-        $bridge->delete();
+        $girder = Girder::findOrFail($girder);
+        $girder->delete();
         
         // redirect
-        Session::flash('message', 'Successfully deleted the bridge!');
-        return Redirect::to('bridges');
+        Session::flash('message', 'Successfully deleted the girder!');
+        return Redirect::to('girders');
     }
 }
-        CREATE TABLE IF NOT EXISTS Girders (
-            girder_id INT AUTO_INCREMENT PRIMARY KEY,
-            deck_id INT NOT NULL,
-            girder_name varchar(255) NOT NULL,
-            girder_direction varchar(255),
-            elevation varchar(255), 
-            FOREIGN KEY (deck_id) REFERENCES Decks(deck_id),
-            CONSTRAINT CHK_Elevation CHECK (elevation='INTERNALFACE' OR elevation='EXTERNALFACE')
-        );

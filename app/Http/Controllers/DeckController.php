@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Deck;
 use Illuminate\Http\Request;
+use Session;
+use Illuminate\Support\Facades\Redirect;
+use Symfony\Component\Console\Input\Input;
 
 class DeckController extends Controller
 {
@@ -14,7 +17,7 @@ class DeckController extends Controller
      */
     public function index()
     {
-        return view('forms.decks.index', [ 'decks' => Deck::all()]);
+        return view('forms.decks.index', [ 'decks' => Deck::where('bridge_id', session('bridge'))->get()]);
 
     }
 
@@ -36,30 +39,10 @@ class DeckController extends Controller
      */
     public function store(Request $request)
     {
-        $mileage_type = request('mileage_type');
-
-        if($mileage_type == "1" || $mileage_type == "2"){
-
-                $product = new Deck();
-                $product->surveyor_name = request('surveyor_name');
-                $product->surveyor_lastName = request('surveyor_lastName');
-                $product->structure_name = request('structure_name');
-                $product->structure_location = request('structure_location');
-                $product->structure_number = request('structure_number');
-
-            if ($mileage_type == "1"){
-                $product->mileageMiles = (int) request('mileage');
-            } else if ($mileage_type == "2"){
-                $product->mileageYards = (int) request('mileage');
-            }
-
-            $product->save();
-        }
-
-deck_id INT AUTO_INCREMENT PRIMARY KEY,
-bridge_id int NOT NULL,
-deck_number int NOT NULL,
-
+        $product = new Deck();
+        $product->bridge_id = session('bridge');//correct with sessions
+        $product->deck_number = request('deck_number');
+        $product->save();
 
         return redirect(route('decks.index'));  
     }
@@ -72,9 +55,7 @@ deck_number int NOT NULL,
      */
     public function show($deck)
     {
-        $Object = Deck::findOrFail($deck); 
-
-        session(['bridge' => Object->bridge_id]);
+        session(['deck' => $deck]);
 
         return view('forms.decks.show', [
             'deck' => Deck::findOrFail($deck)
@@ -101,40 +82,15 @@ deck_number int NOT NULL,
      */
     public function update(Request $request, $deck)
     {
-        $mileage_type = request('mileage_type');
 
-        if($mileage_type == "1" || $mileage_type == "2"){
 
-                $product = findOrFail($deck);
-                $product->surveyor_name = request('surveyor_name');
-                $product->surveyor_lastName = request('surveyor_lastName');
-                $product->structure_name = request('structure_name');
-                $product->structure_location = request('structure_location');
-                $product->structure_number = request('structure_number');
+        $product = Deck::findOrFail($deck);
+        $product->bridge_id = session('bridge');//correct with sessions
+        $product->deck_number = request('deck_number');
 
-            if ($mileage_type == "1"){
-                $product->mileageMiles = (int) request('mileage');
-            } else if ($mileage_type == "2"){
-                $product->mileageYards = (int) request('mileage');
-            }
-
-            $product->update();
-            Session::flash('message', 'Successfully updated deck!');
-            return Redirect::to('decks');
-        }
-deck_id INT AUTO_INCREMENT PRIMARY KEY,
-bridge_id int NOT NULL,
-deck_number int NOT NULL,
-
-    Route::get('/home', function () {
-    // Retrieve a piece of data from the session...
-    $value = session('key');
-
-    // Specifying a default value...
-    $value = session('key', 'default');
-
-    // Store a piece of data in the session...
-});
+        $product->update();
+        Session::flash('message', 'Successfully updated deck!');
+        return Redirect::to('decks');
 
     }
 
@@ -155,3 +111,40 @@ deck_number int NOT NULL,
     }
 }
 
+
+
+
+/*CREATE TRIGGER tr_MyTable_Number
+ON MyTable
+INSTEAD OF INSERT
+AS
+
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+
+BEGIN TRAN;
+
+WITH MaxNumbers_CTE AS
+(
+    SELECT ParentEntityID, MAX(Number) AS Number
+    FROM MyTable
+    WHERE ParentEntityID IN (SELECT ParentEntityID FROM inserted)
+)
+INSERT MyTable (ParentEntityID, Number)
+    SELECT
+        i.ParentEntityID,
+        ROW_NUMBER() OVER
+        (
+            PARTITION BY i.ParentEntityID
+            ORDER BY (SELECT 1)
+        ) + ISNULL(m.Number, 0) AS Number
+    FROM inserted i
+    LEFT JOIN MaxNumbers_CTE m
+        ON m.ParentEntityID = i.ParentEntityID
+
+COMMIT
+
+
+
+this is the URL
+https://stackoverflow.com/questions/2205036/sql-server-unique-auto-increment-column-in-the-context-of-another-column
+*/

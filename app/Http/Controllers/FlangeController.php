@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Flange;
 use Illuminate\Http\Request;
+use Session;
+use Illuminate\Support\Facades\Redirect;
+use Symfony\Component\Console\Input\Input;
 
 class FlangeController extends Controller
 {
@@ -14,7 +17,7 @@ class FlangeController extends Controller
      */
     public function index()
     {
-        return view('forms.bridges.index', [ 'bridges' => Bridge::all()]);
+        return view('forms.flanges.index', [ 'flanges' => Flange::all()]);
     }
 
     /**
@@ -24,7 +27,7 @@ class FlangeController extends Controller
      */
     public function create()
     {
-        return view('forms.bridges.create');
+        return view('forms.flanges.create');
     }
 
     /**
@@ -35,27 +38,40 @@ class FlangeController extends Controller
      */
     public function store(Request $request)
     {
-        $mileage_type = request('mileage_type');
+/*
+            girder_id INT NOT NULL,
+          //  position varchar(255) CHECK (position='TOP' OR position='BOTTOM'), 
+            width_mm int,
+            thickness_mm int,
+            width_inches double(5,2),
+            thickness_inches double(5,2),
+         //  preffered_unit varchar(255)CHECK (preffered_unit='MM' OR preffered_unit='INCHES'),   
 
-        if($mileage_type == "1" || $mileage_type == "2"){
+*/
+        if(request('position') == '1' || request('position') == '2'){
 
-                $product = new Bridge();
-                $product->surveyor_name = request('surveyor_name');
-                $product->surveyor_lastName = request('surveyor_lastName');
-                $product->structure_name = request('structure_name');
-                $product->structure_location = request('structure_location');
-                $product->structure_number = request('structure_number');
+            $product = new Flange();
 
-            if ($mileage_type == "1"){
-                $product->mileageMiles = (int) request('mileage');
-            } else if ($mileage_type == "2"){
-                $product->mileageYards = (int) request('mileage');
+
+            $product->girder_id = session('girder');//correct with sessions
+
+            $product->position = request('position') == 1  ? 'TOP' : 'BOTTOM';
+
+
+            if(request('preffered_unit') == '1'){
+                $product->width_mm = request('width');//correct with sessions
+                $product->thickness_mm = request('thickness');//correct with sessions
+            }elseif(request('preffered_unit') == '2'){
+                $product->width_inches = request('width');//correct with sessions
+                $product->thickness_inches = request('thickness');//correct with sessions
             }
-
+            $product->preffered_unit = request('preffered_unit') == 1  ? 'MM' : 'INCHES';
             $product->save();
         }
 
-        return redirect(route('bridges.index'));  
+
+
+        return redirect(route('flanges.index'));  
     }
 
     /**
@@ -64,10 +80,10 @@ class FlangeController extends Controller
      * @param  \App\Models\Flange  $flange
      * @return \Illuminate\Http\Response
      */
-    public function show(Flange $flange)
+    public function show($flange)
     {
-        return view('forms.bridges.show', [
-            'bridge' => Bridge::findOrFail($bridge)
+        return view('forms.flanges.show', [
+            'flange' => Flange::findOrFail($flange)
         ]);
     }
 
@@ -77,9 +93,9 @@ class FlangeController extends Controller
      * @param  \App\Models\Flange  $flange
      * @return \Illuminate\Http\Response
      */
-    public function edit(Flange $flange)
+    public function edit($flange)
     {
-        return view('forms.bridges.edit', [ 'bridge' => bridge::findOrFail($bridge)]);
+        return view('forms.flanges.edit', [ 'flange' => Flange::findOrFail($flange)]);
     }
 
     /**
@@ -89,29 +105,27 @@ class FlangeController extends Controller
      * @param  \App\Models\Flange  $flange
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Flange $flange)
+    public function update(Request $request, $flange)
     {
-        $mileage_type = request('mileage_type');
+        if(request('position') == '1' || request('position') == '2'){
 
-        if($mileage_type == "1" || $mileage_type == "2"){
+            $product = Flange::findOrFail($flange);
+            $product->girder_id = session('girder');//correct with sessions
+            $product->position = request('position') == 1  ? 'TOP' : 'BOTTOM';
 
-                $product = new Bridge();
-                $product->surveyor_name = request('surveyor_name');
-                $product->surveyor_lastName = request('surveyor_lastName');
-                $product->structure_name = request('structure_name');
-                $product->structure_location = request('structure_location');
-                $product->structure_number = request('structure_number');
-
-            if ($mileage_type == "1"){
-                $product->mileageMiles = (int) request('mileage');
-            } else if ($mileage_type == "2"){
-                $product->mileageYards = (int) request('mileage');
+            if(request('preffered_unit') == '1'){
+                $product->width_mm = request('width');//correct with sessions
+                $product->thickness_mm = request('thickness');//correct with sessions
+            }elseif(request('preffered_unit') == '2'){
+                $product->width_inches = request('width');//correct with sessions
+                $product->thickness_inches = request('thickness');//correct with sessions
             }
-
-            $product->save();
-            Session::flash('message', 'Successfully updated bridge!');
-            return Redirect::to('bridges');
+            $product->preffered_unit = request('preffered_unit') == 1  ? 'MM' : 'INCHES';
+            $product->update();
         }
+            Session::flash('message', 'Successfully updated flange!');
+            return Redirect::to('flanges');
+        
     }
 
     /**
@@ -120,24 +134,13 @@ class FlangeController extends Controller
      * @param  \App\Models\Flange  $flange
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Flange $flange)
+    public function destroy($flange)
     {
-        $bridge = Bridge::findOrFail($bridge);
-        $bridge->delete();
+        $flange = Flange::findOrFail($flange);
+        $flange->delete();
         
         // redirect
-        Session::flash('message', 'Successfully deleted the bridge!');
-        return Redirect::to('bridges');
+        Session::flash('message', 'Successfully deleted the flange!');
+        return Redirect::to('flanges');
     }
 }
-        CREATE TABLE IF NOT EXISTS Flanges (
-            flange_id INT AUTO_INCREMENT PRIMARY KEY,
-            girder_id INT NOT NULL,
-            position varchar(255) CHECK (position='TOP' OR position='BOTTOM'), 
-            width_mm int,
-            thickness_mm int,
-            width_inches double(5,2),
-            thickness_inches double(5,2),
-            preffered_unit varchar(255)CHECK (preffered_unit='MM' OR preffered_unit='INCHES'),   
-            FOREIGN KEY (girder_id) REFERENCES Girders(girder_id)
-        );

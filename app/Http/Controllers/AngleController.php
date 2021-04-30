@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Angle;
 use Illuminate\Http\Request;
+use Session;
+use Illuminate\Support\Facades\Redirect;
+use Symfony\Component\Console\Input\Input;
 
 class AngleController extends Controller
 {
@@ -37,40 +40,64 @@ class AngleController extends Controller
      */
     public function store(Request $request)
     {
-        $mileage_type = request('mileage_type');
-
-        if($mileage_type == "1" || $mileage_type == "2"){
 
             $product = new Angle();
-            $product->girder_id = request('girder_id');
+            $product->girder_id = session('girder');
 
-            $product->position = request('position');
+            switch (request('position')) {
+                case 1:
+                    $product->position = 'top-left';
+                    break;
 
+                case 2:
+                    $product->position = 'top-right';
+                    break;
 
-            if ($preffered_unit == "1"){
-                $product->preffered_unit = 'MM';
+                case 3:
+                    $product->position = 'bottom-left';
+                    break;
 
-                $product->position = (int) request('length_mm');
-                $product->position = (int) request('height_mm');
-                $product->position = (int) request('width_mm');
-                $product->position = (int) request('thickness_mm');
+                case 4:
+                    $product->position = 'bottom-right';
+                    break;
 
-
-            } else if ($preffered_unit == "2"){
-                $product->preffered_unit = 'INCHES';
-
-                $product->position = (double) request('length_inches');
-                $product->position = (double) request('height_inches');
-                $product->position = (double) request('width_inches');
-                $product->position = (double) request('thickness_inches');
-
+                default:
+                    //code here
             }
 
-            $product->save();
-        }
+            if (request('preffered_unit') == "1"){
+                $product->preffered_unit = 'MM';
+                $product->length_mm = (int) request('length');
+                $product->height_mm = (int) request('height');
+                $product->width_mm = (int) request('width');
+                $product->thickness_mm = (int) request('thickness');
+                $product->save();
 
+            } else if (request('preffered_unit') == "2"){
+                $product->preffered_unit = 'INCHES';
+                $product->length_inches = (double) request('length');
+                $product->height_inches = (double) request('height');
+                $product->width_inches = (double) request('width');
+                $product->thickness_inches = (double) request('thickness');
+                $product->save();
+
+            }
         return redirect(route('angles.index'));    
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      * Display the specified resource.
@@ -106,51 +133,52 @@ class AngleController extends Controller
      */
     public function update(Request $request, $angle)
     {
-        $mileage_type = request('mileage_type');
-
-        if($mileage_type == "1" || $mileage_type == "2"){
-
             $product = Angle::findOrFail($angle);
-            $product->girder_id = request('girder_id');
+            $product->girder_id = session('girder');
 
-            $product->position = request('position');
+            switch (request('position')) {
+                case 1:
+                    $product->position = 'top-left';
+                    break;
 
+                case 2:
+                    $product->position = 'top-right';
+                    break;
 
-            if ($preffered_unit == "1"){
+                case 3:
+                    $product->position = 'bottom-left';
+                    break;
+
+                case 4:
+                    $product->position = 'bottom-right';
+                    break;
+
+                default:
+                    //code here
+            }
+
+            if (request('preffered_unit') == "1"){
                 $product->preffered_unit = 'MM';
+                $product->length_mm = (int) request('length');
+                $product->height_mm = (int) request('height');
+                $product->width_mm = (int) request('width');
+                $product->thickness_mm = (int) request('thickness');
+                $product->update();
 
-                $product->position = (int) request('length_mm');
-                $product->position = (int) request('height_mm');
-                $product->position = (int) request('width_mm');
-                $product->position = (int) request('thickness_mm');
 
-
-            } else if ($preffered_unit == "2"){
+            } else if (request('preffered_unit') == "2"){
                 $product->preffered_unit = 'INCHES';
-
-                $product->position = (double) request('length_inches');
-                $product->position = (double) request('height_inches');
-                $product->position = (double) request('width_inches');
-                $product->position = (double) request('thickness_inches');
+                $product->length_inches = (double) request('length');
+                $product->height_inches = (double) request('height');
+                $product->width_inches = (double) request('width');
+                $product->thickness_inches = (double) request('thickness');
+                $product->update();
 
             }
 
-            $product->update();
+        
             Session::flash('message', 'Successfully updated angle!');
             return Redirect::to('angles');
-        }
-
-
-
-
-
-
-
-
-
-
-
-
     }
 
     /**

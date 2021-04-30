@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Cp;
 use Illuminate\Http\Request;
+use Session;
+use Illuminate\Support\Facades\Redirect;
+use Symfony\Component\Console\Input\Input;
 
 class CpController extends Controller
 {
@@ -14,7 +17,7 @@ class CpController extends Controller
      */
     public function index()
     {
-        return view('forms.bridges.index', [ 'bridges' => Bridge::all()]);
+        return view('forms.cps.index', [ 'cps' => Cp::all()]);
     }
 
     /**
@@ -24,7 +27,7 @@ class CpController extends Controller
      */
     public function create()
     {
-        return view('forms.bridges.create');
+        return view('forms.cps.create');
     }
 
     /**
@@ -35,27 +38,38 @@ class CpController extends Controller
      */
     public function store(Request $request)
     {
-        $mileage_type = request('mileage_type');
 
-        if($mileage_type == "1" || $mileage_type == "2"){
 
-                $product = new Bridge();
-                $product->surveyor_name = request('surveyor_name');
-                $product->surveyor_lastName = request('surveyor_lastName');
-                $product->structure_name = request('structure_name');
-                $product->structure_location = request('structure_location');
-                $product->structure_number = request('structure_number');
+        if(
+            (request('position') == '1' || request('position') == '2') && 
+            (request('preffered_unit') == '1' || request('preffered_unit') == '2')
+        ){
 
-            if ($mileage_type == "1"){
-                $product->mileageMiles = (int) request('mileage');
-            } else if ($mileage_type == "2"){
-                $product->mileageYards = (int) request('mileage');
+            $product = new Cp();
+
+            $product->girder_id = session('girder');//correct with sessions
+            $product->position = request('position') == 1  ? 'TOP' : 'BOTTOM';
+            $product->location = request('location');//correct with sessions
+            $product->stiffener_start = request('stiffener_start');//correct with sessions
+            $product->stiffener_end = request('stiffener_end');//correct with sessions
+
+            if(request('preffered_unit') == '1'){
+                $product->preffered_unit = 'MM';
+                $product->start_distance_mm = request('start_distance');
+                $product->end_distance_mm = request('end_distance');
+                $product->width_mm = request('width');
+                $product->thickness_mm = request('thickness');//correct with sessions
+            }elseif(request('preffered_unit') == '2'){
+                $product->preffered_unit = 'INCHES';
+                $product->start_distance_inches = request('start_distance');
+                $product->end_distance_inches = request('end_distance');
+                $product->width_inches = request('width');
+                $product->thickness_inches = request('thickness');//correct with sessions
             }
-
             $product->save();
-        }
+        }   
 
-        return redirect(route('bridges.index'));  
+        return redirect(route('cps.index'));  
     }
 
     /**
@@ -64,10 +78,10 @@ class CpController extends Controller
      * @param  \App\Models\Cp  $cp
      * @return \Illuminate\Http\Response
      */
-    public function show(Cp $cp)
+    public function show($cp)
     {
-        return view('forms.bridges.show', [
-            'bridge' => Bridge::findOrFail($bridge)
+        return view('forms.cps.show', [
+            'cp' => Cp::findOrFail($cp)
         ]);
     }
 
@@ -77,9 +91,9 @@ class CpController extends Controller
      * @param  \App\Models\Cp  $cp
      * @return \Illuminate\Http\Response
      */
-    public function edit(Cp $cp)
+    public function edit($cp)
     {
-        return view('forms.bridges.edit', [ 'bridge' => bridge::findOrFail($bridge)]);
+        return view('forms.cps.edit', [ 'cp' => Cp::findOrFail($cp)]);
     }
 
     /**
@@ -89,13 +103,13 @@ class CpController extends Controller
      * @param  \App\Models\Cp  $cp
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Cp $cp)
+    public function update(Request $request, $cp)
     {
         $mileage_type = request('mileage_type');
 
         if($mileage_type == "1" || $mileage_type == "2"){
 
-                $product = new Bridge();
+                $product = Cp::findOrFail($cp);
                 $product->surveyor_name = request('surveyor_name');
                 $product->surveyor_lastName = request('surveyor_lastName');
                 $product->structure_name = request('structure_name');
@@ -108,9 +122,9 @@ class CpController extends Controller
                 $product->mileageYards = (int) request('mileage');
             }
 
-            $product->save();
-            Session::flash('message', 'Successfully updated bridge!');
-            return Redirect::to('bridges');
+            $product->update();
+            Session::flash('message', 'Successfully updated cp!');
+            return Redirect::to('cps');
         }
     }
 
@@ -120,31 +134,13 @@ class CpController extends Controller
      * @param  \App\Models\Cp  $cp
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Cp $cp)
+    public function destroy($cp)
     {
-        $bridge = Bridge::findOrFail($bridge);
-        $bridge->delete();
+        $cp = Cp::findOrFail($cp);
+        $cp->delete();
         
         // redirect
-        Session::flash('message', 'Successfully deleted the bridge!');
-        return Redirect::to('bridges');
+        Session::flash('message', 'Successfully deleted the cp!');
+        return Redirect::to('cps');
     }
 }
-        CREATE TABLE IF NOT EXISTS CPs (
-            cp_id INT AUTO_INCREMENT PRIMARY KEY,
-            girder_id INT NOT NULL,
-            position varchar(255) CHECK (position='TOP' OR position='BOTTOM'),
-            location int,         
-            stiffener_start INT,
-            start_distance_mm INT,
-            start_distance_inches double(5,2),
-            stiffener_end INT,
-            end_distance_mm INT,
-            end_distance_inches double(5,2),
-            width_mm INT,
-            thickness_mm INT,
-            width_inches double(5,2),
-            thickness_inches double(5,2),
-            preffered_unit varchar(255)CHECK (preffered_unit='MM' OR preffered_unit='INCHES'),
-            FOREIGN KEY (girder_id) REFERENCES Girders(girder_id)
-        );

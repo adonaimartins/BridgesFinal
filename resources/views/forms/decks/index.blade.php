@@ -14,7 +14,7 @@ bridge_id
     <thead>
         <tr>
             <td>deck_id</td>
-            <td>deck_number</td>
+            <td>deck number</td>
 
             <td></td>
         </tr>

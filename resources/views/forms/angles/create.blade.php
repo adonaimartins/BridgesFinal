@@ -9,8 +9,8 @@
 <h1>Create a angle</h1>
     {{ Form::open(array('url' => 'angles')) }}
         <div class="form-group">
-            {{ Form::label('position', 'positionposition') }}
-            {{ Form::text('position', old('position'), array('class' => 'form-control')) }}
+            {{ Form::label('position', 'position') }}
+            {{ Form::select('position', array('0' => 'Select a position', '1' => 'top-left', '2' => 'top-right', '3' => 'bottom-left', '4' => 'bottom-right'), old('preffered_unit'), array('class' => 'form-control')) }}
         </div>
         <div class="form-group">
             {{ Form::label('preffered_unit', 'preffered unit') }}
@@ -32,13 +32,9 @@
             {{ Form::label('thickness', 'thickness') }}
             {{ Form::number('thickness', old('thickness'), array('class' => 'form-control')) }}
         </div>
-        <div class="form-group">
-            {{ Form::label('thickness', 'thickness') }}
-            {{ Form::number('thickness', old('thickness'), array('class' => 'form-control')) }}
-        </div>
 
         {{ Form::submit('Create the angle!', array('class' => 'btn btn-primary')) }}
     {{ Form::close() }}
 @endsection
 
-
+ 

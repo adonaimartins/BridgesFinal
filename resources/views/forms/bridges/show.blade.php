@@ -18,5 +18,6 @@
             <strong>mileageYards :</strong> {{ $bridge->mileageYards  }}
         </p>
     </div>
-
+    <a class="btn btn-small btn-info" href="{{ route('decks.index') }}">Decks</a><br>
+    <hr>
 @endsection

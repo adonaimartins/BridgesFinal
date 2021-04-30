@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Stiffener;
 use Illuminate\Http\Request;
+use Session;
+use Illuminate\Support\Facades\Redirect;
+use Symfony\Component\Console\Input\Input;
 
 class StiffenerController extends Controller
 {
@@ -14,7 +17,7 @@ class StiffenerController extends Controller
      */
     public function index()
     {
-        return view('forms.bridges.index', [ 'bridges' => Bridge::all()]);
+        return view('forms.stiffeners.index', [ 'stiffeners' => Stiffener::all()]);
     }
 
     /**
@@ -24,7 +27,7 @@ class StiffenerController extends Controller
      */
     public function create()
     {
-        return view('forms.bridges.create');
+        return view('forms.stiffeners.create');
     }
 
     /**
@@ -35,27 +38,14 @@ class StiffenerController extends Controller
      */
     public function store(Request $request)
     {
-        $mileage_type = request('mileage_type');
 
-        if($mileage_type == "1" || $mileage_type == "2"){
+        $product = new Stiffener();
+        $product->bay_id = session('bay');
+        $product->stiffener_number = request('stiffener_number');
+        $product->type = request('type');
+        $product->save();
 
-                $product = new Bridge();
-                $product->surveyor_name = request('surveyor_name');
-                $product->surveyor_lastName = request('surveyor_lastName');
-                $product->structure_name = request('structure_name');
-                $product->structure_location = request('structure_location');
-                $product->structure_number = request('structure_number');
-
-            if ($mileage_type == "1"){
-                $product->mileageMiles = (int) request('mileage');
-            } else if ($mileage_type == "2"){
-                $product->mileageYards = (int) request('mileage');
-            }
-
-            $product->save();
-        }
-
-        return redirect(route('bridges.index'));  
+        return redirect(route('stiffeners.index'));  
     }
 
     /**
@@ -64,10 +54,10 @@ class StiffenerController extends Controller
      * @param  \App\Models\Stiffener  $stiffener
      * @return \Illuminate\Http\Response
      */
-    public function show(Stiffener $stiffener)
+    public function show($stiffener)
     {
-        return view('forms.bridges.show', [
-            'bridge' => Bridge::findOrFail($bridge)
+        return view('forms.stiffeners.show', [
+            'stiffener' => Stiffener::findOrFail($stiffener)
         ]);
     }
 
@@ -77,9 +67,9 @@ class StiffenerController extends Controller
      * @param  \App\Models\Stiffener  $stiffener
      * @return \Illuminate\Http\Response
      */
-    public function edit(Stiffener $stiffener)
+    public function edit($stiffener)
     {
-        return view('forms.bridges.edit', [ 'bridge' => bridge::findOrFail($bridge)]);
+        return view('forms.stiffeners.edit', [ 'stiffener' => Stiffener::findOrFail($stiffener)]);
     }
 
     /**
@@ -89,29 +79,17 @@ class StiffenerController extends Controller
      * @param  \App\Models\Stiffener  $stiffener
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Stiffener $stiffener)
+    public function update(Request $request, $stiffener)
     {
-        $mileage_type = request('mileage_type');
+        $product = Stiffener::findOrFail($stiffener);
+        $product->bay_id = session('bay');
+        $product->stiffener_number = request('stiffener_number');
+        $product->type = request('type');
+        $product->update();
 
-        if($mileage_type == "1" || $mileage_type == "2"){
-
-                $product = new Bridge();
-                $product->surveyor_name = request('surveyor_name');
-                $product->surveyor_lastName = request('surveyor_lastName');
-                $product->structure_name = request('structure_name');
-                $product->structure_location = request('structure_location');
-                $product->structure_number = request('structure_number');
-
-            if ($mileage_type == "1"){
-                $product->mileageMiles = (int) request('mileage');
-            } else if ($mileage_type == "2"){
-                $product->mileageYards = (int) request('mileage');
-            }
-
-            $product->save();
-            Session::flash('message', 'Successfully updated bridge!');
-            return Redirect::to('bridges');
-        }
+        Session::flash('message', 'Successfully updated stiffener!');
+        return Redirect::to('stiffeners');
+        
     }
 
     /**
@@ -120,20 +98,13 @@ class StiffenerController extends Controller
      * @param  \App\Models\Stiffener  $stiffener
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Stiffener $stiffener)
+    public function destroy($stiffener)
     {
-        $bridge = Bridge::findOrFail($bridge);
-        $bridge->delete();
+        $stiffener = Stiffener::findOrFail($stiffener);
+        $stiffener->delete();
         
         // redirect
-        Session::flash('message', 'Successfully deleted the bridge!');
-        return Redirect::to('bridges');
+        Session::flash('message', 'Successfully deleted the stiffener!');
+        return Redirect::to('stiffeners');
     }
 }
-                CREATE TABLE IF NOT EXISTS Stiffener (
-                    stiffener_id INT AUTO_INCREMENT PRIMARY KEY,
-                    bay_id INT NOT NULL,
-                    stiffener_number int,
-                    type int,
-                    FOREIGN KEY (bay_id) REFERENCES Bays(bay_id)
-                );

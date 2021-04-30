@@ -27,14 +27,14 @@ girder_id
 
     <tbody>
     @foreach($bays as $key => $value)
-        <tr>
-            <td>{{ $value->bay_id }}</td>
-            <td>{{ $value->bay_position  }}</td>
-            <td>{{ $value->length_mm }}</td>
-            <td>{{ $value->thickness_mm }}</td>
-            <td>{{ $value->length_inches }}</td>
-            <td>{{ $value->thickness_inches }}</td>
-            <td>{{ $value->preffered_unit }}</td>
+            <tr>
+                <td>{{ $value->bay_id }}</td>
+                <td>{{ $value->bay_position  }}</td>
+                <td>{{ $value->length_mm }}</td>
+                <td>{{ $value->thickness_mm }}</td>
+                <td>{{ $value->length_inches }}</td>
+                <td>{{ $value->thickness_inches }}</td>
+                <td>{{ $value->preffered_unit }}</td>
 
             <!-- we will also add show, edit, and delete buttons -->
             <td>

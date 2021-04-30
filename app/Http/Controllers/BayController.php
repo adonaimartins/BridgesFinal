@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Bay;
 use Illuminate\Http\Request;
+use Session;
+use Illuminate\Support\Facades\Redirect;
+use Symfony\Component\Console\Input\Input;
 
 class BayController extends Controller
 {
@@ -14,7 +17,7 @@ class BayController extends Controller
      */
     public function index()
     {
-        return view('forms.bridges.index', [ 'bridges' => Bridge::all()]);
+        return view('forms.bays.index', [ 'bays' => Bay::all()]);
     }
 
     /**
@@ -24,7 +27,7 @@ class BayController extends Controller
      */
     public function create()
     {
-        return view('forms.bridges.create');
+        return view('forms.bays.create');
     }
 
     /**
@@ -35,27 +38,27 @@ class BayController extends Controller
      */
     public function store(Request $request)
     {
-        $mileage_type = request('mileage_type');
 
-        if($mileage_type == "1" || $mileage_type == "2"){
+        if(request('preffered_unit') == '1' || request('preffered_unit') == '2'){
 
-                $product = new Bridge();
-                $product->surveyor_name = request('surveyor_name');
-                $product->surveyor_lastName = request('surveyor_lastName');
-                $product->structure_name = request('structure_name');
-                $product->structure_location = request('structure_location');
-                $product->structure_number = request('structure_number');
+            $product = new Bay();
 
-            if ($mileage_type == "1"){
-                $product->mileageMiles = (int) request('mileage');
-            } else if ($mileage_type == "2"){
-                $product->mileageYards = (int) request('mileage');
+
+            $product->girder_id = session('girder');//correct with sessions
+            $product->bay_position = request('bay_position');
+
+            if(request('preffered_unit') == '1'){
+                $product->length_mm = request('length');//correct with sessions
+                $product->thickness_mm = request('thickness');//correct with sessions
+            }elseif(request('preffered_unit') == '2'){
+                $product->length_inches = request('length');//correct with sessions
+                $product->thickness_inches = request('thickness');//correct with sessions
             }
-
+            $product->preffered_unit = request('girder_direction') == 1  ? 'MM' : 'INCHES';
             $product->save();
         }
 
-        return redirect(route('bridges.index'));  
+        return redirect(route('bays.index'));  
     }
 
     /**
@@ -64,10 +67,12 @@ class BayController extends Controller
      * @param  \App\Models\Bay  $bay
      * @return \Illuminate\Http\Response
      */
-    public function show(Bay $bay)
+    public function show($bay)
     {
-        return view('forms.bridges.show', [
-            'bridge' => Bridge::findOrFail($bridge)
+        session(['bay' => $bay]);
+
+        return view('forms.bays.show', [
+            'bay' => Bay::findOrFail($bay)
         ]);
     }
 
@@ -77,9 +82,9 @@ class BayController extends Controller
      * @param  \App\Models\Bay  $bay
      * @return \Illuminate\Http\Response
      */
-    public function edit(Bay $bay)
+    public function edit($bay)
     {
-        return view('forms.bridges.edit', [ 'bridge' => bridge::findOrFail($bridge)]);
+        return view('forms.bays.edit', [ 'bay' => Bay::findOrFail($bay)]);
     }
 
     /**
@@ -89,29 +94,27 @@ class BayController extends Controller
      * @param  \App\Models\Bay  $bay
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Bay $bay)
+    public function update(Request $request, $bay)
     {
-        $mileage_type = request('mileage_type');
+            if(request('preffered_unit') == '1' || request('preffered_unit') == '2'){
+                
+                $product = Bay::findOrFail($bay);
+                $product->girder_id = session('girder');//correct with sessions
+                $product->bay_position = request('bay_position');
 
-        if($mileage_type == "1" || $mileage_type == "2"){
-
-                $product = new Bridge();
-                $product->surveyor_name = request('surveyor_name');
-                $product->surveyor_lastName = request('surveyor_lastName');
-                $product->structure_name = request('structure_name');
-                $product->structure_location = request('structure_location');
-                $product->structure_number = request('structure_number');
-
-            if ($mileage_type == "1"){
-                $product->mileageMiles = (int) request('mileage');
-            } else if ($mileage_type == "2"){
-                $product->mileageYards = (int) request('mileage');
+                if(request('preffered_unit') == '1'){
+                    $product->length_mm = request('length');//correct with sessions
+                    $product->thickness_mm = request('thickness');//correct with sessions
+                }elseif(request('preffered_unit') == '2'){
+                    $product->length_inches = request('length');//correct with sessions
+                    $product->thickness_inches = request('thickness');//correct with sessions
+                }
+                $product->preffered_unit = request('girder_direction') == 1  ? 'MM' : 'INCHES';
+                $product->update();
             }
-
-            $product->save();
-            Session::flash('message', 'Successfully updated bridge!');
-            return Redirect::to('bridges');
-        }
+            Session::flash('message', 'Successfully updated bay!');
+            return Redirect::to('bays');
+        
     }
 
     /**
@@ -120,24 +123,13 @@ class BayController extends Controller
      * @param  \App\Models\Bay  $bay
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Bay $bay)
+    public function destroy($bay)
     {
-        $bridge = Bridge::findOrFail($bridge);
-        $bridge->delete();
+        $bay = Bay::findOrFail($bay);
+        $bay->delete();
         
         // redirect
-        Session::flash('message', 'Successfully deleted the bridge!');
-        return Redirect::to('bridges');
+        Session::flash('message', 'Successfully deleted the bay!');
+        return Redirect::to('bays');
     }
 }
-        CREATE TABLE IF NOT EXISTS Bays (
-            bay_id INT AUTO_INCREMENT PRIMARY KEY,
-            girder_id INT NOT NULL,
-            bay_position varchar(255),
-            length_mm int,
-            thickness_mm int,
-            length_inches double(5,2), 
-            thickness_inches double(5,2),
-            preffered_unit varchar(255)CHECK (preffered_unit='MM' OR preffered_unit='INCHES'),
-            FOREIGN KEY (girder_id) REFERENCES Girders(girder_id)
-        );

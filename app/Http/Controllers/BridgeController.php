@@ -84,7 +84,8 @@ class BridgeController extends Controller
      */
     public function show($bridge)
     {
-        
+        session(['bridge' => $bridge]);
+
         return view('forms.bridges.show', [
             'bridge' => Bridge::findOrFail($bridge)
         ]);

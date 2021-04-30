@@ -9,10 +9,12 @@ bridge_id
         <h2>{{ $deck->structure_name  }}</h2>
         <p>
             <strong>deck_id :</strong> {{ $deck->deck_id  }}<br>
-            <strong>mileageYards :</strong> {{ $deck->deck_number  }}
+            <strong>deck number :</strong> {{ $deck->deck_number  }}
         </p>
     </div>
 
+    <a class="btn btn-small btn-info" href="{{ route('girders.index') }}">Girders</a><br>
+    <hr>
 @endsection
 
 

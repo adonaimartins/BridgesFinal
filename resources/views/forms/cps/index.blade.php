@@ -24,7 +24,9 @@ girder_id
             <td>width_mm</td>
             <td>thickness_mm</td>
             <td>width_inches</td>
+            <td>thickness_inches</td>
             <td>preffered_unit</td>
+            <td></td>
         </tr>
     </thead>
 

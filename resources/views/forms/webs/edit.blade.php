@@ -11,35 +11,30 @@ girder_id
 
 {{ Form::model($web, array('route' => array('webs.update', $web->web_id ), 'method' => 'PUT')) }}
 
-    <div class="form-group">
-        {{ Form::label('surveyor_name', 'surveyor name') }}
-        {{ Form::text('surveyor_name', $web->surveyor_name, array('class' => 'form-control')) }}
-    </div>
+
         <div class="form-group">
-        {{ Form::label('surveyor_lastName', 'surveyor lastname') }}
-        {{ Form::text('surveyor_lastName', $web->surveyor_lastName, array('class' => 'form-control')) }}
-    </div>
-
-    <div class="form-group">
-        {{ Form::label('structure_name', 'structure name') }}
-        {{ Form::text('structure_name', $web->structure_name, array('class' => 'form-control')) }}
-    </div>
+            {{ Form::label('preffered_unit', 'preffered unit') }}
+            {{ Form::select('preffered_unit', array('0' => 'Select a unit', '1' => 'MM', '2' => 'INCHES'), null, array('class' => 'form-control')) }}
+        </div>
         <div class="form-group">
-        {{ Form::label('structure_location', 'structure location') }}
-        {{ Form::text('structure_location', $web->structure_location, array('class' => 'form-control')) }}
-    </div>
+            {{ Form::label('length', 'length') }}
+            {{ Form::nummber('length', $web->surveyor_name, array('class' => 'form-control')) }}
+        </div>
+        <div class="form-group">
+            {{ Form::label('height', 'height') }}
+            {{ Form::nummber('height', $web->surveyor_name, array('class' => 'form-control')) }}
+        </div>
 
-    <div class="form-group">
-        {{ Form::label('structure_number', 'structure number') }}
-        {{ Form::text('structure_number', $web->structure_number, array('class' => 'form-control')) }}
-    </div>
+        <div class="form-group">
+            {{ Form::label('width', 'width name') }}
+            {{ Form::nummber('width', $web->surveyor_name, array('class' => 'form-control')) }}
+        </div>
+        <div class="form-group">
+            {{ Form::label('thickness', 'thickness') }}
+            {{ Form::nummber('thickness', $web->surveyor_name, array('class' => 'form-control')) }}
+        </div>
 
-    <div class="form-group">
-        {{ Form::label('mileage_type', 'web mileage') }}
-        {{ Form::select('mileage_type', array('0' => 'Select a unit', '1' => 'Miles', '2' => 'Yards'), $web->mileage_type, array('class' => 'form-control')) }}
-        {{ Form::text('mileage', null, array('class' => 'form-control')) }}
 
-    </div>
 
 
     {{ Form::submit('Edit the web!', array('class' => 'btn btn-primary')) }}
@@ -47,15 +42,3 @@ girder_id
 {{ Form::close() }}
 
 @endsection
-
-
-            web_id INT AUTO_INCREMENT PRIMARY KEY,
-            length_mm int,
-            height_mm int,
-            width_mm int,
-            thickness_mm int,
-            length_inches double(5,2),
-            height_inches double(5,2),
-            width_inches double(5,2),
-            thickness_inches double(5,2),
-            preffered_unit varchar(255)CHECK (preffered_unit='MM' OR preffered_unit='INCHES'),
