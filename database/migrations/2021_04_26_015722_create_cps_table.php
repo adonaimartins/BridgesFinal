@@ -18,21 +18,21 @@ class CreateCpsTable extends Migration
 
             $table->unsignedBigInteger('girder_id');
 
-            $table->foreign('girder_id')->references('girder_id')->on('Girders')->onDelete('cascade');
+            $table->foreign('girder_id')->references('girder_id')->on('girders')->onDelete('cascade');
 
             $table->string('position', 255);
 
             $table->integer('location');
             $table->integer('stiffener_start');
-            $table->integer('start_distance_mm');
-            $table->double('start_distance_inches', 5, 2);
+            $table->integer('start_distance_mm')->nullable();
+            $table->double('start_distance_inches', 5, 2)->nullable();
             $table->integer('stiffener_end');
-            $table->integer('end_distance_mm');
-            $table->double('end_distance_inches', 5, 2);
-            $table->integer('width_mm');
-            $table->integer('thickness_mm');
-            $table->double('width_inches', 5, 2);
-            $table->double('thickness_inches', 5, 2);
+            $table->integer('end_distance_mm')->nullable();
+            $table->double('end_distance_inches', 5, 2)->nullable();
+            $table->integer('width_mm')->nullable();
+            $table->integer('thickness_mm')->nullable();
+            $table->double('width_inches', 5, 2)->nullable();
+            $table->double('thickness_inches', 5, 2)->nullable();
 
             $table->string('preffered_unit', 255);
 

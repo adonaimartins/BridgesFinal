@@ -30,7 +30,6 @@ class BayController extends Controller
 
         }
 
-
         return view('forms.bays.index', [ 
             'bays' => $allBays,
             'stiffeners' => $stiffenersBidi

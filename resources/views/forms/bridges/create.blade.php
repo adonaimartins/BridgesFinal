@@ -6,7 +6,7 @@
 @section('content')
 
 <h1>Create a bridge</h1>
-    {{ Form::open(array('url' => 'bridges.store')) }}
+    {{ Form::open(array('url' => 'bridges')) }}
         <div class="form-group">
             {{ Form::label('surveyor_name', 'surveyor name') }}
             {{ Form::text('surveyor_name', old('surveyor_name'), array('class' => 'form-control')) }}

@@ -11,7 +11,7 @@ class Stiffener extends Model
 
     public $timestamps = false;
 
-    protected $table = 'Stiffener'; //tableName
+    protected $table = 'Stiffeners'; //tableName
     protected $primaryKey = 'stiffener_id';
     protected $fillable =   [ 
                                 'stiffener_number', 

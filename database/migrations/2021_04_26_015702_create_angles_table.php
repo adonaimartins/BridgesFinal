@@ -16,17 +16,17 @@ class CreateAnglesTable extends Migration
         Schema::create('angles', function (Blueprint $table) {
             $table->id('angle_id');
             $table->unsignedBigInteger('girder_id');
-            $table->foreign('girder_id')->references('girder_id')->on('Girders')->onDelete('cascade');
+            $table->foreign('girder_id')->references('girder_id')->on('girders')->onDelete('cascade');
 
             $table->string('position', 255);
-            $table->integer('length_mm');
-            $table->integer('height_mm');
-            $table->integer('width_mm');
-            $table->integer('thickness_mm');
-            $table->double('length_inches', 5, 2);
-            $table->double('height_inches', 5, 2);
-            $table->double('width_inches', 5, 2);
-            $table->double('thickness_inches', 5, 2);
+            $table->integer('length_mm')->nullable();
+            $table->integer('height_mm')->nullable();
+            $table->integer('width_mm')->nullable();
+            $table->integer('thickness_mm')->nullable();
+            $table->double('length_inches', 5, 2)->nullable();
+            $table->double('height_inches', 5, 2)->nullable();
+            $table->double('width_inches', 5, 2)->nullable();
+            $table->double('thickness_inches', 5, 2)->nullable();
             $table->string('preffered_unit', 255);
 
         });

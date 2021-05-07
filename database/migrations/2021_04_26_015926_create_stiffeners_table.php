@@ -16,7 +16,7 @@ class CreateStiffenersTable extends Migration
         Schema::create('stiffeners', function (Blueprint $table) {
             $table->id('stiffener_id');
             $table->unsignedBigInteger('bay_id');
-            $table->foreign('bay_id')->references('bay_id')->on('Bays')->onDelete('cascade');
+            $table->foreign('bay_id')->references('bay_id')->on('bays')->onDelete('cascade');
             $table->integer('stiffener_number');
             $table->integer('type');
         });

@@ -66,12 +66,12 @@ bay_id
 
 
             @if ($i==0)
-                
-                <svg class="stiffener" height="100" width="25" >
-                    <text fill="#000" font-size="15" font-family="Verdana" x="5" y="50">{{$stiffeners[0][0]->stiffener_number}}</text>
-                    <rect x="0" y="0" rx="10" ry="10" width="25" height="100" style="fill:purple; stroke-width:5; opacity:0.4"/>
-                </svg>
-
+                @if (count($stiffeners[0])>0)
+                    <svg class="stiffener" height="100" width="25" >
+                        <text fill="#000" font-size="15" font-family="Verdana" x="5" y="50">{{$stiffeners[0][0]->stiffener_number}}</text>
+                        <rect x="0" y="0" rx="10" ry="10" width="25" height="100" style="fill:purple; stroke-width:5; opacity:0.4"/>
+                    </svg>
+                @endif
 
                 <svg class="bay" height="100" width="100" >
                     <rect x="0" y="0" rx="10" ry="10" width="100" height="100" style="fill:white; stroke:black; stroke-width:2; opacity:0.3" />
