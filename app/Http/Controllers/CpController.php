@@ -17,7 +17,12 @@ class CpController extends Controller
      */
     public function index()
     {
-        return view('forms.cps.index', [ 'cps' => Cp::all()]);
+
+
+        
+
+
+        return view('forms.cps.index', [ 'cps' => Cp::where('girder_id', session('girder'))->get()]);
     }
 
     /**

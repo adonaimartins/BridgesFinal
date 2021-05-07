@@ -14,10 +14,10 @@ girder_id
 
 
 
-    <div class="form-group">
-        {{ Form::label('bay_position', 'bay position') }}
-        {{ Form::select('bay_position', array('0' => 'Select a position', '1' => 'top-left', '2' => 'top-right', '3' => 'bottom-right', '4' => 'bottom-left'), null, array('class' => 'form-control')) }}
-    </div>
+        <div class="form-group">
+            {{ Form::label('bay_position', 'bay_position') }}
+            {{ Form::number('bay_position', $bay->bay_position, array('class' => 'form-control')) }}
+        </div>
 
     <div class="form-group">
         {{ Form::label('preffered_unit', 'preffered unit') }}

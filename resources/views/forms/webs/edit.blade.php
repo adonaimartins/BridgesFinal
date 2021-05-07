@@ -18,20 +18,20 @@ girder_id
         </div>
         <div class="form-group">
             {{ Form::label('length', 'length') }}
-            {{ Form::nummber('length', $web->surveyor_name, array('class' => 'form-control')) }}
+            {{ Form::number('length', $web->surveyor_name, array('class' => 'form-control')) }}
         </div>
         <div class="form-group">
             {{ Form::label('height', 'height') }}
-            {{ Form::nummber('height', $web->surveyor_name, array('class' => 'form-control')) }}
+            {{ Form::number('height', $web->surveyor_name, array('class' => 'form-control')) }}
         </div>
 
         <div class="form-group">
             {{ Form::label('width', 'width name') }}
-            {{ Form::nummber('width', $web->surveyor_name, array('class' => 'form-control')) }}
+            {{ Form::number('width', $web->surveyor_name, array('class' => 'form-control')) }}
         </div>
         <div class="form-group">
             {{ Form::label('thickness', 'thickness') }}
-            {{ Form::nummber('thickness', $web->surveyor_name, array('class' => 'form-control')) }}
+            {{ Form::number('thickness', $web->surveyor_name, array('class' => 'form-control')) }}
         </div>
 
 

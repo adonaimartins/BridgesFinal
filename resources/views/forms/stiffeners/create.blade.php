@@ -11,7 +11,7 @@ bay_id
     {{ Form::open(array('url' => 'stiffeners')) }}
 
         <div class="form-group">
-            {{ Form::label('stiffener_number', 'stiffener number') }}
+            {{ Form::label('stiffener_number', 'stiffener Q222MI8 \!        number') }}
             {{ Form::number('stiffener_number', old('stiffener_number'), array('class' => 'form-control')) }}
         </div>
             <div class="form-group">

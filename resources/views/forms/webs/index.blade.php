@@ -50,10 +50,6 @@ girder_id
 
                 <!-- delete the web (uses the destroy method DESTROY /webs/{id} -->
 
-
-
-
-
                 <!-- we will add this later since its a little more complicated than the other two buttons -->
 
                 {{ Form::open(array('url' => 'web/' . $value->web_id, 'class' => 'pull-right' , 'method' => 'POST')) }}
@@ -61,10 +57,6 @@ girder_id
                     @method('DELETE') 
                     {{ Form::submit('Delete this web', array('class' => 'btn btn-warning')) }}
                 {{ Form::close() }}
-
-
-
-
 
 
                 <!-- show the web (uses the show method found at GET /webs/{id} -->

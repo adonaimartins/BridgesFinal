@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Stiffener;
+use App\Models\Bay;
+
 use Illuminate\Http\Request;
 use Session;
 use Illuminate\Support\Facades\Redirect;
@@ -17,7 +19,26 @@ class StiffenerController extends Controller
      */
     public function index()
     {
-        return view('forms.stiffeners.index', [ 'stiffeners' => Stiffener::all()]);
+
+
+
+        $allBays = Bay::where('girder_id', session('girder'))->get();
+
+        $stiffenersBidi = array();
+
+        foreach ($allBays as $bay) {
+            $stiffenerArray = Stiffener::where('bay_id', $bay->bay_id )->get();
+            array_push($stiffenersBidi, $stiffenerArray);
+
+        }
+
+
+        return view('forms.stiffeners.index', [ 
+            'bays' => $allBays,
+            'stiffeners' => $stiffenersBidi,
+            'stiffenersList' => Stiffener::where('bay_id', session('bay'))->get()
+
+        ]);
     }
 
     /**

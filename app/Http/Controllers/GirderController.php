@@ -17,7 +17,7 @@ class GirderController extends Controller
      */
     public function index()
     {
-        return view('forms.girders.index', [ 'girders' => Girder::all()]);
+        return view('forms.girders.index', [ 'girders' => Girder::where('deck_id', session('deck'))->get()]);
     }
 
     /**

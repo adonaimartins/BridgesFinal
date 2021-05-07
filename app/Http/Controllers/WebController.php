@@ -17,7 +17,7 @@ class WebController extends Controller
      */
     public function index()
     {
-        return view('forms.webs.index', [ 'webs' => Web::all()]);
+        return view('forms.webs.index', [ 'webs' => Web::where('girder_id', session('girder'))->orderBy('web_id', 'DESC')->get()]);
     }
 
     /**
@@ -38,54 +38,30 @@ class WebController extends Controller
      */
     public function store(Request $request)
     {
-            girder_id INT NOT NULL,
-            length_mm int,
-            height_mm int,
-            width_mm int,
-            thickness_mm int,
-            length_inches double(5,2),
-            height_inches double(5,2),
-            width_inches double(5,2),
-            thickness_inches double(5,2),
 
+        if(request('preffered_unit') == "1" || request('preffered_unit') == "2"){
 
-            preffered_unit varchar(255)CHECK (preffered_unit='MM' OR preffered_unit='INCHES'),
-
-
-
-
-        if($mileage_type == "1" || $mileage_type == "2"){
-
-            $product = new Angle();
+            $product = new Web();
             $product->girder_id = session('girder');
 
-            $product->position = request('position');
-
-
-            if ($preffered_unit == "1"){
+            if (request('preffered_unit') == "1"){
                 $product->preffered_unit = 'MM';
 
-                $product->position = (int) request('length_mm');
-                $product->position = (int) request('height_mm');
-                $product->position = (int) request('width_mm');
-                $product->position = (int) request('thickness_mm');
+                $product->length_mm = (int) request('length');
+                $product->height_mm = (int) request('height');
+                $product->width_mm = (int) request('width');
+                $product->thickness_mm = (int) request('thickness');
 
-
-            } else if ($preffered_unit == "2"){
+            } else if (request('preffered_unit') == "2"){
                 $product->preffered_unit = 'INCHES';
 
-                $product->position = (double) request('length_inches');
-                $product->position = (double) request('height_inches');
-                $product->position = (double) request('width_inches');
-                $product->position = (double) request('thickness_inches');
-
+                $product->length_inches = (double) request('length');
+                $product->height_inches = (double) request('height');
+                $product->width_inches = (double) request('width');
+                $product->thickness_inches = (double) request('thickness');
             }
-
             $product->save();
         }
-
-
-
         return redirect(route('webs.index'));  
     }
 
@@ -122,27 +98,32 @@ class WebController extends Controller
      */
     public function update(Request $request, $web)
     {
-        $mileage_type = request('mileage_type');
+        if(request('preffered_unit') == "1" || request('preffered_unit') == "2"){
 
-        if($mileage_type == "1" || $mileage_type == "2"){
+            $product = Web::findOrFail($web);
+            $product->girder_id = session('girder');
 
-                $product = Web::findOrFail($web);
-                $product->surveyor_name = request('surveyor_name');
-                $product->surveyor_lastName = request('surveyor_lastName');
-                $product->structure_name = request('structure_name');
-                $product->structure_location = request('structure_location');
-                $product->structure_number = request('structure_number');
+            if (request('preffered_unit') == "1"){
+                $product->preffered_unit = 'MM';
 
-            if ($mileage_type == "1"){
-                $product->mileageMiles = (int) request('mileage');
-            } else if ($mileage_type == "2"){
-                $product->mileageYards = (int) request('mileage');
+                $product->length_mm = (int) request('length');
+                $product->height_mm = (int) request('height');
+                $product->width_mm = (int) request('width');
+                $product->thickness_mm = (int) request('thickness');
+
+            } else if (request('preffered_unit') == "2"){
+                $product->preffered_unit = 'INCHES';
+
+                $product->length_inches = (double) request('length');
+                $product->height_inches = (double) request('height');
+                $product->width_inches = (double) request('width');
+                $product->thickness_inches = (double) request('thickness');
             }
-
             $product->update();
             Session::flash('message', 'Successfully updated web!');
-            return Redirect::to('webs');
+
         }
+        return Redirect::to('webs');
     }
 
     /**

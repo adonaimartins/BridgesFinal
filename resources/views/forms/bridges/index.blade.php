@@ -33,7 +33,7 @@
             <td>{{ $value->mileageYards }}</td>
             <!-- we will also add show, edit, and delete buttons -->
             <td>
-                <!-- delete the bridge (uses the destroy method DESTROY /bridges/{id} -->s
+                <!-- delete the bridge (uses the destroy method DESTROY /bridges/{id} -->
                 <!-- we will add this later since its a little more complicated than the other two buttons -->
                 {{ Form::open(array('url' => 'bridge/' . $value->bridge_id, 'class' => 'pull-right' , 'method' => 'POST')) }}
                     @csrf

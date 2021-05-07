@@ -17,7 +17,7 @@ class AngleController extends Controller
      */
     public function index()
     {
-        return view('forms.angles.index', [ 'angles' => Angle::all()]);
+        return view('forms.angles.index', [ 'angles' => Angle::where('girder_id', session('girder'))->get()]);
 
     }
 

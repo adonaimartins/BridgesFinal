@@ -15,8 +15,8 @@ class CreateBaysTable extends Migration
     {
         Schema::create('bays', function (Blueprint $table) {
             $table->id('bay_id');
+            $table->unsignedBigInteger('girder_id');
             $table->foreign('girder_id')->references('girder_id')->on('Girders')->onDelete('cascade');
-
             $table->string('bay_position', 255);
             $table->integer('length_mm');
             $table->integer('thickness_mm');
@@ -25,7 +25,7 @@ class CreateBaysTable extends Migration
             $table->string('preffered_unit', 255);
         });
 
-        DB::statement('ALTER TABLE girders ADD CONSTRAINT CHK_PREFFERED_UNIT CHECK (preffered_unit='MM' OR preffered_unit='INCHES')');
+        DB::statement("ALTER TABLE bays ADD CONSTRAINT CHK_PREFFERED_UNIT CHECK (preffered_unit='MM' OR preffered_unit='INCHES')");
     }
 
     /**

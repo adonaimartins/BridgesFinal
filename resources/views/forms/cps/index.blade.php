@@ -1,7 +1,4 @@
-
- @extends('Layouts.lobbyLayouts.cpsLayout')
-
-
+@extends('Layouts.lobbyLayouts.cpsLayout')
 
 @section('content')
 <!-- will be used to show any messages -->
@@ -48,18 +45,9 @@ girder_id
             <td>{{ $value->thickness_inches }}</td>
             <td>{{ $value->preffered_unit }}</td>
 
-
-
-
-
             <!-- we will also add show, edit, and delete buttons -->
             <td>
-
                 <!-- delete the cp (uses the destroy method DESTROY /cps/{id} -->
-
-
-
-
 
                 <!-- we will add this later since its a little more complicated than the other two buttons -->
 
@@ -68,11 +56,6 @@ girder_id
                     @method('DELETE') 
                     {{ Form::submit('Delete this cp', array('class' => 'btn btn-warning')) }}
                 {{ Form::close() }}
-
-
-
-
-
 
                 <!-- show the cp (uses the show method found at GET /cps/{id} -->
                 <a class="btn btn-small btn-success" href="{{ URL::to('cp/' . $value->cp_id) }}">Show this cp</a>
@@ -85,6 +68,6 @@ girder_id
     @endforeach
     </tbody>
 </table>
+<hr>
+
 @endsection
-
-

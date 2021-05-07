@@ -69,5 +69,84 @@ girder_id
     @endforeach
     </tbody>
 </table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<hr>
+
+<div class="scrollmenu" data-spy="scroll" data-target=".navbar" data-offset="50" style="display: flex; flex-direction: column;" >
+
+
+    <div style="display: flex; flex-direction: row;" >
+
+
+
+        @for ($i = 0; $i < $size=count($bays); $i++)
+
+
+            @if ($i==0)
+                
+                <svg class="stiffener" height="100" width="25" >
+                    <text fill="#000" font-size="15" font-family="Verdana" x="5" y="50">{{$stiffeners[0][0]->stiffener_number}}</text>
+                    <rect x="0" y="0" rx="10" ry="10" width="25" height="100" style="fill:purple; stroke-width:5; opacity:0.4"/>
+                </svg>
+
+
+                <svg class="bay" height="100" width="100" >
+                    <rect x="0" y="0" rx="10" ry="10" width="100" height="100" style="fill:white; stroke:black; stroke-width:2; opacity:0.3" />
+                    <text fill="#000" font-size="15" font-family="Verdana" x="35" y="45">bay</text>
+                    <text fill="#000" font-size="15" font-family="Verdana" x="35" y="65">{{$bays[0]->bay_position}}</text>
+                </svg>
+
+                @for($x=1 ; $x<count($stiffeners[$i]); $x++)
+                    <svg class="stiffener" height="100" width="25" >
+                        <text fill="#000" font-size="15" font-family="Verdana" x="5" y="50">{{$stiffeners[0][$x]->stiffener_number}}</text>
+                        <rect x="0" y="0" rx="10" ry="10" width="25" height="100" style="fill:purple; stroke-width:5; opacity:0.4"/>
+                    </svg>
+                @endfor
+
+
+            @elseif($i>=1)
+
+                
+                <svg class="bay" height="100" width="100" >
+                    <rect x="0" y="0" rx="10" ry="10" width="100" height="100" style="fill:white; stroke:black; stroke-width:2; opacity:0.3" />
+                    <text fill="#000" font-size="15" font-family="Verdana" x="35" y="45">bay</text>
+                    <text fill="#000" font-size="15" font-family="Verdana" x="35" y="65">{{$bays[$i]->bay_position}}</text>
+                </svg>
+
+
+                @for($x=0 ; $x<count($stiffeners[$i]); $x++)
+                    <svg class="stiffener" height="100" width="25" >
+                        <text fill="#000" font-size="15" font-family="Verdana" x="5" y="50">{{$stiffeners[$i][$x]->stiffener_number}}</text>
+                        <rect x="0" y="0" rx="10" ry="10" width="25" height="100" style="fill:purple; stroke-width:5; opacity:0.4"/>
+                    </svg>
+                @endfor
+            @endif
+
+
+
+
+
+        @endfor
+
+
+    </div>
+</div>
+
+
 @endsection
 

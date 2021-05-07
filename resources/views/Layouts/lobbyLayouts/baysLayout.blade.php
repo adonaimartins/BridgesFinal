@@ -32,9 +32,29 @@
 
             margin-left: 350px;
         }
+        
+        .bays{
+        }
+        *{
+            padding: 0px;
+            margin: 0px;
 
+        }
+
+        div.scrollmenu {
+
+
+
+            padding: 0px;
+
+        }
+        div.scrollmenu a:hover {
+          background-color: #777;
+        }
 
     </style>
+
+
 </head>
 <body>
 <div class="container">
@@ -55,6 +75,9 @@
 
 
 	@yield("content")
+
+
+<hr>
 
 <a class="input-links-0" href="{{ route('bridges.index') }}">Bridges</a><br>
     <a class="input-links-1" href="{{ route('decks.index') }}">Decks</a><br>

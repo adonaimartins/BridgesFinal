@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Bay;
+use App\Models\Stiffener;
+
 use Illuminate\Http\Request;
 use Session;
 use Illuminate\Support\Facades\Redirect;
@@ -17,7 +19,22 @@ class BayController extends Controller
      */
     public function index()
     {
-        return view('forms.bays.index', [ 'bays' => Bay::all()]);
+
+        $allBays = Bay::where('girder_id', session('girder'))->get();
+
+        $stiffenersBidi = array();
+
+        foreach ($allBays as $bay) {
+            $stiffenerArray = Stiffener::where('bay_id', $bay->bay_id )->get();
+            array_push($stiffenersBidi, $stiffenerArray);
+
+        }
+
+
+        return view('forms.bays.index', [ 
+            'bays' => $allBays,
+            'stiffeners' => $stiffenersBidi
+        ]);
     }
 
     /**
@@ -43,21 +60,21 @@ class BayController extends Controller
 
             $product = new Bay();
 
-
             $product->girder_id = session('girder');//correct with sessions
             $product->bay_position = request('bay_position');
 
             if(request('preffered_unit') == '1'){
                 $product->length_mm = request('length');//correct with sessions
                 $product->thickness_mm = request('thickness');//correct with sessions
+
+
             }elseif(request('preffered_unit') == '2'){
                 $product->length_inches = request('length');//correct with sessions
                 $product->thickness_inches = request('thickness');//correct with sessions
             }
-            $product->preffered_unit = request('girder_direction') == 1  ? 'MM' : 'INCHES';
+            $product->preffered_unit = request('preffered_unit') == 1  ? 'MM' : 'INCHES';
             $product->save();
         }
-
         return redirect(route('bays.index'));  
     }
 
@@ -72,7 +89,8 @@ class BayController extends Controller
         session(['bay' => $bay]);
 
         return view('forms.bays.show', [
-            'bay' => Bay::findOrFail($bay)
+            'bay' => Bay::findOrFail($bay),
+            'stiffener' => Stiffener::where('bay_id', session('bay'))->get()
         ]);
     }
 
@@ -109,7 +127,7 @@ class BayController extends Controller
                     $product->length_inches = request('length');//correct with sessions
                     $product->thickness_inches = request('thickness');//correct with sessions
                 }
-                $product->preffered_unit = request('girder_direction') == 1  ? 'MM' : 'INCHES';
+                $product->preffered_unit = request('preffered_unit') == 1  ? 'MM' : 'INCHES';
                 $product->update();
             }
             Session::flash('message', 'Successfully updated bay!');

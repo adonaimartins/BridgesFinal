@@ -15,6 +15,7 @@ class CreateWebsTable extends Migration
     {
         Schema::create('webs', function (Blueprint $table) {
             $table->id('web_id');
+            $table->unsignedBigInteger('girder_id');
             $table->foreign('girder_id')->references('girder_id')->on('Girders')->onDelete('cascade');
 
             $table->integer('length_mm');
@@ -31,7 +32,7 @@ class CreateWebsTable extends Migration
 
         });
 
-        DB::statement('ALTER TABLE girders ADD CONSTRAINT CHK_PREFFERED_UNIT CHECK (preffered_unit='MM' OR preffered_unit='INCHES')');
+        DB::statement("ALTER TABLE webs ADD CONSTRAINT CHK_PREFFERED_UNIT CHECK (preffered_unit='MM' OR preffered_unit='INCHES')");
     }
 
     /**

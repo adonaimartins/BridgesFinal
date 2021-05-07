@@ -15,20 +15,20 @@ girder_id
         </div>
         <div class="form-group">
             {{ Form::label('length', 'length') }}
-            {{ Form::nummber('length', old('length'), array('class' => 'form-control')) }}
+            {{ Form::number('length', old('length'), array('class' => 'form-control')) }}
         </div>
         <div class="form-group">
             {{ Form::label('height', 'height') }}
-            {{ Form::nummber('height', old('height'), array('class' => 'form-control')) }}
+            {{ Form::number('height', old('height'), array('class' => 'form-control')) }}
         </div>
 
         <div class="form-group">
             {{ Form::label('width', 'width name') }}
-            {{ Form::nummber('width', old('width'), array('class' => 'form-control')) }}
+            {{ Form::number('width', old('width'), array('class' => 'form-control')) }}
         </div>
         <div class="form-group">
             {{ Form::label('thickness', 'thickness') }}
-            {{ Form::nummber('thickness', old('thickness'), array('class' => 'form-control')) }}
+            {{ Form::number('thickness', old('thickness'), array('class' => 'form-control')) }}
         </div>
 
 

@@ -6,8 +6,8 @@ girder_id
     {{ Form::open(array('url' => 'bays')) }}
 
         <div class="form-group">
-            {{ Form::label('bay_position', 'bay position') }}
-            {{ Form::select('bay_position', array('0' => 'Select a position', '1' => 'top-left', '2' => 'top-right', '3' => 'bottom-right', '4' => 'bottom-left'), old('bay_position'), array('class' => 'form-control')) }}
+            {{ Form::label('bay_position', 'bay_position') }}
+            {{ Form::number('bay_position', old('bay_position'), array('class' => 'form-control')) }}
         </div>
         <div class="form-group">
             {{ Form::label('preffered_unit', 'preffered unit') }}
@@ -27,10 +27,6 @@ girder_id
         {{ Form::submit('Create the bay!', array('class' => 'btn btn-primary')) }}
     {{ Form::close() }}
 @endsection
-
-
-
-
 
 
 </div>

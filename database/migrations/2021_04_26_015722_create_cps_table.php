@@ -15,6 +15,9 @@ class CreateCpsTable extends Migration
     {
         Schema::create('cps', function (Blueprint $table) {
             $table->id('cp_id');
+
+            $table->unsignedBigInteger('girder_id');
+
             $table->foreign('girder_id')->references('girder_id')->on('Girders')->onDelete('cascade');
 
             $table->string('position', 255);
@@ -35,7 +38,7 @@ class CreateCpsTable extends Migration
 
 
         });
-        DB::statement('ALTER TABLE girders ADD CONSTRAINT CHK_PREFFERED_UNIT CHECK (preffered_unit='MM' OR preffered_unit='INCHES')');
+        DB::statement("ALTER TABLE cps ADD CONSTRAINT CHK_PREFFERED_UNIT CHECK (preffered_unit='MM' OR preffered_unit='INCHES')");
     }
 
     /**

@@ -13,11 +13,21 @@ class CreateDecksTable extends Migration
      */
     public function up()
     {
-        Schema::create('decks', function (Blueprint $table) {
-            $table->id('deck_id');
-            $table->foreign('bridge_id')->references('bridge_id')->on('Bridges')->onDelete('cascade');
-            $table->integer('deck_number');
-        });
+        Schema::create('decks', function (Blueprint $table) 
+            {
+                $table->id('deck_id');
+                $table->unsignedBigInteger('bridge_id');
+                $table->integer('deck_number');
+                $table->foreign('bridge_id')->references('bridge_id')->on('bridges')->onDelete('cascade');
+
+            }
+
+        );
+
+                //DB::statement("FOREIGN KEY (bridge_id) REFERENCES Bridges(bridge_id) ON DELETE CASCADE");
+
+
+
     }
 
     /**

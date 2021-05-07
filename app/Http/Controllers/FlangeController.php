@@ -17,7 +17,7 @@ class FlangeController extends Controller
      */
     public function index()
     {
-        return view('forms.flanges.index', [ 'flanges' => Flange::all()]);
+        return view('forms.flanges.index', [ 'flanges' => Flange::where('girder_id', session('girder'))->get()]);
     }
 
     /**

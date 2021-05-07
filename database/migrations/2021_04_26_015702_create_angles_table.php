@@ -15,6 +15,7 @@ class CreateAnglesTable extends Migration
     {
         Schema::create('angles', function (Blueprint $table) {
             $table->id('angle_id');
+            $table->unsignedBigInteger('girder_id');
             $table->foreign('girder_id')->references('girder_id')->on('Girders')->onDelete('cascade');
 
             $table->string('position', 255);
@@ -26,13 +27,11 @@ class CreateAnglesTable extends Migration
             $table->double('height_inches', 5, 2);
             $table->double('width_inches', 5, 2);
             $table->double('thickness_inches', 5, 2);
-
-
-            $table->string('surveyor_name', 255);
+            $table->string('preffered_unit', 255);
 
         });
 
-        DB::statement('ALTER TABLE girders ADD CONSTRAINT CHK_PREFFERED_UNIT CHECK (preffered_unit='MM' OR preffered_unit='INCHES')');
+        DB::statement("ALTER TABLE angles ADD CONSTRAINT CHK_PREFFERED_UNIT CHECK (preffered_unit='MM' OR preffered_unit='INCHES')");
     }
 
     /**
@@ -44,3 +43,4 @@ class CreateAnglesTable extends Migration
     {
         Schema::dropIfExists('angles');
     }
+}
