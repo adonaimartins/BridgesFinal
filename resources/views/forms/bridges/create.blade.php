@@ -34,4 +34,8 @@
         </div>
         {{ Form::submit('Create the bridge!', array('class' => 'btn btn-primary')) }}
     {{ Form::close() }}
+
+
+                <img src="/images/bridge.jpg" style="width: 50%; margin-top: 10%">
+
 @endsection

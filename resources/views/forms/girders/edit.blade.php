@@ -4,7 +4,7 @@
 
 
 @section('content')
-deck_id
+
 <h1>Edit {{ $girder->girder_id }}</h1>
 
 <!-- if there are creation errors, they will show here -->
@@ -29,5 +29,7 @@ deck_id
     {{ Form::submit('Edit the girder!', array('class' => 'btn btn-primary')) }}
 
 {{ Form::close() }}
+
+<img src="../../images/girder.png" style="width: 50%; height: 50%; margin-top: 10%">
 
 @endsection

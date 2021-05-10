@@ -65,6 +65,9 @@
                             </div>
                         </div>
                     </form>
+
+                    <img src="images/bridge.jpg" style="width: 100%; margin-top: 10%">
+
                 </div>
             </div>
         </div>

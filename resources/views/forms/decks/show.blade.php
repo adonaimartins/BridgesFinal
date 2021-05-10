@@ -15,6 +15,11 @@ bridge_id
 
     <a class="btn btn-small btn-info" href="{{ route('girders.index') }}">Girders</a><br>
     <hr>
+
+	<a class="input-links-0" href="{{ route('bridges.index') }}">Bridges</a><br>
+
+	<hr>	
+    <img src="../images/decks.jpg" style="width: 50%; height: 50%; margin-top: 10%">
 @endsection
 
 

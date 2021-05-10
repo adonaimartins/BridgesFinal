@@ -20,4 +20,7 @@
     </div>
     <a class="btn btn-small btn-info" href="{{ route('decks.index') }}">Decks</a><br>
     <hr>
+
+                    <img src="/images/bridge.jpg" style="width: 50%; margin-top: 10%">
+
 @endsection

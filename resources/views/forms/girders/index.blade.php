@@ -58,6 +58,13 @@
     @endforeach
     </tbody>
 </table>
+
+<hr>
+<a class="input-links-0" href="{{ route('bridges.index') }}">Bridges</a><br>
+    <a class="input-links-1" href="{{ route('decks.index') }}">Decks</a><br>
+
+<hr>
+<img src="images/girder.png" style="width: 50%; height: 50%; margin-top: 10%">
 @endsection
 
 

@@ -46,4 +46,8 @@
 
 {{ Form::close() }}
 
+                <img src="/images/bridge.jpg" style="width: 50%; margin-top: 10%">
+
+
+
 @endsection

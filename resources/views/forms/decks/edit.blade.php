@@ -19,6 +19,6 @@ bridge_id
     {{ Form::submit('Edit the deck!', array('class' => 'btn btn-primary')) }}
 
 {{ Form::close() }}
-
+<img src="../../images/decks.jpg" style="width: 50%; height: 50%; margin-top: 10%">
 @endsection
 

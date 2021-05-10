@@ -120,8 +120,7 @@
 
     @yield("content")
 
-<a class="input-links-0" href="{{ route('bridges.index') }}">Bridges</a><br>
-    <a class="input-links-1" href="{{ route('decks.index') }}">Decks</a><br>
+
 
 
 </div>

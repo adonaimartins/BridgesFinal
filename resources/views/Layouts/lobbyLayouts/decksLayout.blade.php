@@ -123,7 +123,6 @@
 
 	@yield("content")
 
-<a class="input-links-0" href="{{ route('bridges.index') }}">Bridges</a><br>
 <hr>
 
 

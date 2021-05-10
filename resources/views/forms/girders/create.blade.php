@@ -29,15 +29,10 @@ deck_id
     {{ Form::close() }}
 
 
+    <hr>
+
+<img src="../images/girder.png" style="width: 50%; height: 50%; margin-top: 10%">
 @endsection
-
-
-
-</div>
-</body>
-</html>
-
-
 
 
 
