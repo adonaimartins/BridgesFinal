@@ -1,8 +1,5 @@
 
  @extends('Layouts.lobbyLayouts.stiffenersLayout')
-
-
-
 @section('content')
 <!-- will be used to show any messages -->
 @if (Session::has('message'))
@@ -16,7 +13,6 @@ bay_id
             <td>stiffener_number</td>
             <td>type</td>
             <td></td>
-
         </tr>
     </thead>
     <tbody>
@@ -33,9 +29,6 @@ bay_id
                 <!-- delete the stiffener (uses the destroy method DESTROY /stiffeners/{id} -->
 
 
-
-
-
                 <!-- we will add this later since its a little more complicated than the other two buttons -->
 
                 {{ Form::open(array('url' => 'stiffener/' . $value->stiffener_id, 'class' => 'pull-right' , 'method' => 'POST')) }}
@@ -43,10 +36,6 @@ bay_id
                     @method('DELETE') 
                     {{ Form::submit('Delete this stiffener', array('class' => 'btn btn-warning')) }}
                 {{ Form::close() }}
-
-
-
-
 
 
                 <!-- show the stiffener (uses the show method found at GET /stiffeners/{id} -->
@@ -85,17 +74,13 @@ bay_id
                         <rect x="0" y="0" rx="10" ry="10" width="25" height="100" style="fill:purple; stroke-width:5; opacity:0.4"/>
                     </svg>
                 @endfor
-
-
             @elseif($i>=1)
 
-                
                 <svg class="bay" height="100" width="100" >
                     <rect x="0" y="0" rx="10" ry="10" width="100" height="100" style="fill:white; stroke:black; stroke-width:2; opacity:0.3" />
                     <text fill="#000" font-size="15" font-family="Verdana" x="35" y="45">bay</text>
                     <text fill="#000" font-size="15" font-family="Verdana" x="35" y="65">{{$bays[$i]->bay_position}}</text>
                 </svg>
-
 
                 @for($x=0 ; $x<count($stiffeners[$i]); $x++)
                     <svg class="stiffener" height="100" width="25" >
@@ -104,14 +89,7 @@ bay_id
                     </svg>
                 @endfor
             @endif
-
-
-
-
-
         @endfor
-
-
 <hr>
 @endsection
 

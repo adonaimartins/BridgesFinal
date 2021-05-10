@@ -13,12 +13,12 @@ use App\Http\Controllers\BridgeController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+/*
 Route::get('/', function () {
     return view('home');
-})->name('home');
+})->name('home1');
 
-
+*/
 
 
 
@@ -111,3 +111,8 @@ Route::get('/web/{id}','App\Http\Controllers\WebController@show')->name('webs.sh
 Route::get('/web/{id}/edit','App\Http\Controllers\WebController@edit')->name('webs.edit');
 Route::put('/web/{id}','App\Http\Controllers\WebController@update')->name('webs.update');
 Route::delete('/web/{id}','App\Http\Controllers\WebController@destroy')->name('webs.destroy');
+
+Auth::routes([
+		'register'=>false
+]);
+Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
