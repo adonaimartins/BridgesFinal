@@ -42,7 +42,7 @@
     </div>
 
 
-    {{ Form::submit('Edit the bridge!', array('class' => 'btn btn-primary')) }}
+    {{ Form::submit('Edit the bridge!', array('class' => 'btn btn-primary','dusk'=> 'edit-submit')) }}
 
 {{ Form::close() }}
 

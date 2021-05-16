@@ -23,7 +23,6 @@ class CreateBridgesTable extends Migration
             $table->string('structure_name', 255);
             $table->string('structure_location', 255);
             $table->string('structure_number', 255);
-
             $table->integer('mileageMiles')->nullable();
             $table->integer('mileageYards')->nullable();
 

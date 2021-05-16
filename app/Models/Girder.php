@@ -23,7 +23,7 @@ class Girder extends Model
     {
         return $this->hasMany(Bay::class, "bay_id", "bay_id");//
     }
-        public function webs()//
+        public function webs()
     {
         return $this->hasMany(Web::class, "web_id", "web_id");//
     }

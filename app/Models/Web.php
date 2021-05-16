@@ -14,19 +14,19 @@ class Web extends Model
     protected $table = 'Webs'; //tableName
     protected $primaryKey = 'web_id';
     protected $fillable =  [ 
-                                'length_mm', //
+                                'length_mm', 
                                 'height_mm', 
-                                'width_mm', //
+                                'width_mm', 
                                 'thickness_mm', 
-                                'length_inches', //
+                                'length_inches', 
                                 'height_inches', 
-                                'width_inches', //
+                                'width_inches', 
                                 'thickness_inches', 
                                 'preffered_unit' 
                             ]; //columnds
 
     public function girder()
     {
-        return $this->belongsTo(Girder::class, "girder_id", "girder_id");
+         return $this->belongsTo(Girder::class, "girder_id", "girder_id");
     }
 }

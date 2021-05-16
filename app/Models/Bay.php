@@ -29,7 +29,7 @@ class Bay extends Model
 
     public function stiffeners()
     {
-        return $this->hasMany(Stiffener::class, "stiffener_id", "stiffener_id");
+       return $this->hasMany(Stiffener::class, "stiffener_id", "stiffener_id");
     }
 
 }

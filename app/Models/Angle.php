@@ -13,8 +13,7 @@ class Angle extends Model
 
     protected $table = 'Angles'; //tableName
     protected $primaryKey = 'angle_id';
-    protected $fillable = [ 
-
+    protected $fillable = [
                             'position', 
                             'length_mm', 
                             'height_mm', 
@@ -25,11 +24,11 @@ class Angle extends Model
                             'width_inches', 
                             'thickness_inches', 
                             'preffered_unit'
-                            ]; //columnds
+                            ]; //columns
 
-    public function girder()
-    {
-        return $this->belongsTo(Girder::class, "girder_id", "girder_id");
-    }
+     public function girder()
+     {
+         return $this->belongsTo(Girder::class, "girder_id", "girder_id");
+     }
 
 }

@@ -33,7 +33,7 @@ class WebFactory extends Factory
         ];
     }
 }
-        CREATE TABLE IF NOT EXISTS Webs (
+        "CREATE TABLE IF NOT EXISTS Webs (
             web_id INT AUTO_INCREMENT PRIMARY KEY,
             girder_id INT NOT NULL,
             length_mm int,
@@ -47,4 +47,4 @@ class WebFactory extends Factory
             preffered_unit varchar(255)CHECK (preffered_unit='MM' OR preffered_unit='INCHES'),
             FOREIGN KEY (girder_id) REFERENCES Girders(girder_id)
 
-        );
+        )";
