@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-
+use Illuminate\Support\Facades\DB;
 class CreateAnglesTable extends Migration
 {
     /**
@@ -15,7 +15,7 @@ class CreateAnglesTable extends Migration
     {
         Schema::create('angles', function (Blueprint $table) {
             $table->id('angle_id');
-            $table->unsignedBigInteger('girder_id');
+            $table->unsignedBigInteger('girder_id')->default(0);
             $table->foreign('girder_id')->references('girder_id')->on('girders')->onDelete('cascade');
 
             $table->string('position', 255);

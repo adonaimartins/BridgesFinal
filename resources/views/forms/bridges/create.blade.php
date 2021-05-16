@@ -32,6 +32,6 @@
             {{ Form::select('mileage_type', array('0' => 'Select a unit', '1' => 'Miles', '2' => 'Yards'), old('bridge_level'), array('class' => 'form-control')) }}
             {{ Form::text('mileage', old('mileage'), array('class' => 'form-control')) }}
         </div>
-        {{ Form::submit('Create the bridge!', array('class' => 'btn btn-primary')) }}
+        {{ Form::submit('Create the bridge!', array('class' => 'btn btn-primary','dusk'=> 'create-submit')) }}
     {{ Form::close() }}
 @endsection

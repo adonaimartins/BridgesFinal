@@ -1,5 +1,5 @@
 <?php
-
+use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -23,9 +23,9 @@ class CreateDecksTable extends Migration
             }
 
         );
-
-                //DB::statement("FOREIGN KEY (bridge_id) REFERENCES Bridges(bridge_id) ON DELETE CASCADE");
-
+            //this line has some SQL syntax issues
+            //DB::statement("FOREIGN KEY (bridge_id) REFERENCES Bridges(bridge_id) ON DELETE CASCADE");
+            
 
 
     }

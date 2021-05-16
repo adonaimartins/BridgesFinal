@@ -13,7 +13,7 @@
     </div>
     <ul class="nav navbar-nav">
         <li><a href="{{ URL::to('bridges') }}">View All bridges</a></li>
-        <li><a href="{{ URL::to(route('bridges.create')) }}">Create a bridge</a>
+        <li><a dusk="create-button" href="{{ URL::to(route('bridges.create')) }}">Create a bridge</a>
     </ul>
 </nav>
 

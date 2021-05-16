@@ -13,7 +13,7 @@ class Bridge extends Model
 
     protected $table = 'Bridges'; //tableName
     protected $primaryKey = 'bridge_id';
-    protected $fillable = [ 'surveyor_name', 'surveyor_lastName', 'structure_name', 'structure_location', 'structure_number', 'mileageMiles', 'mileageYards' ]; //columnds
+    protected $fillable = [ 'surveyor_name', 'surveyor_lastName', 'structure_name', 'structure_location', 'structure_number', 'mileageMiles', 'mileageYards' ]; //columns
 
 
     public function decks()

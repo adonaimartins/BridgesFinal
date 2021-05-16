@@ -42,10 +42,10 @@
                 {{ Form::close() }}
 
                 <!-- show the bridge (uses the show method found at GET /bridges/{id} -->
-                <a class="btn btn-small btn-success" href="{{ URL::to('bridge/' . $value->bridge_id) }}">Show this bridge</a>
+                <a dusk="show-button" class="btn btn-small btn-success" href="{{ URL::to('bridge/' . $value->bridge_id) }}">Show this bridge</a>
 
                 <!-- edit this bridge (uses the edit method found at GET /bridges/{id}/edit -->
-                <a class="btn btn-small btn-info" href="{{ URL::to('bridge/' . $value->bridge_id . '/edit') }}">Edit this bridge</a>
+                <a dusk="edit-button" class="btn btn-small btn-info" href="{{ URL::to('bridge/' . $value->bridge_id . '/edit') }}">Edit this bridge</a>
 
             </td>
         </tr>

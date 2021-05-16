@@ -2,10 +2,15 @@
 
 namespace Database\Seeders;
 
+use App\Models\Bridge;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
+
+use Illuminate\Foundation\Testing\WithFaker;
 
 class BridgeSeeder extends Seeder
 {
+	use WithFaker;
     /**
      * Run the database seeds.
      *
@@ -14,15 +19,17 @@ class BridgeSeeder extends Seeder
     public function run()
     {
 
-   	  	 DB::table('bridges')->insert([
+   	  	  DB::table('bridges')->insert([
 	       		
-	            'surveyor_name' => $this->faker->surveyor_name,
-	            'surveyor_lastName' => $this->faker->surveyor_lastName,
-	            'structure_name' => $this->faker->structure_name,
-	            'structure_location' => $this->faker->structure_location,
-	            'structure_number' => $this->faker->structure_number,		
-	            'mileageMiles' => $this->faker->randomNumber(2),
-	            'mileageYards' => $this->faker->randomNumber(3)
-	       ]);
+	             'surveyor_name' => "asd",
+	             'surveyor_lastName' => "asd",
+	             'structure_name' => "asd",
+	             'structure_location' => "asd",
+	             'structure_number' => 12312,		
+	             'mileageMiles' => rand(1,999),
+	             'mileageYards' => rand(1,999)
+	        ]);
+
+		//Bridge::factory(50)->create();
     }	
 }
