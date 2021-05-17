@@ -71,7 +71,7 @@
                             <!-- Left Side Of Navbar -->
                             <ul class="navbar-nav mr-auto">
                                 <li><a style="color: grey; margin-right: 20px"  href="{{ URL::to('stiffeners') }}">View All Stiffeners</a></li>
-                                <li><a style="color: grey"  href="{{ URL::to(route('stiffeners.create')) }}">Create a Stiffener</a>
+                                <li><a dusk="create-stiffener" style="color: grey"  href="{{ URL::to(route('stiffeners.create')) }}">Create a Stiffener</a>
                             </ul>
 
                             <!-- Right Side Of Navbar -->

@@ -41,7 +41,7 @@
                             <!-- Left Side Of Navbar -->
                             <ul class="navbar-nav mr-auto">
                                 <li><a class="" style="color: grey; margin-right: 20px" href="{{ URL::to('bridges') }}"><strong>View All bridges</strong></a></li>
-                                <li><a class="" style="color: grey" href="{{ URL::to(route('bridges.create')) }}"><strong>Create a bridge</strong></a></li>
+                                <li><a dusk="create-button" class="" style="color: grey" href="{{ URL::to(route('bridges.create')) }}"><strong>Create a bridge</strong></a></li>
                             </ul>
 
                             <!-- Right Side Of Navbar -->

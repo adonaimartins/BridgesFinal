@@ -36,14 +36,15 @@ class DatabaseSeeder extends Seeder
 	    //    ]);
 
         //---------Calling all seeders in order------------------//
-        $this->call(BridgeSeeder::class);
-        // $this->call(DeckSeeder::class);
-        // $this->call(GirderSeeder::class);
+        //$this->call(BridgeSeeder::class);
+        //$this->call(DeckSeeder::class);
+        //$this->call(GirderSeeder::class);
         //$this->call(BaySeeder::class);
-        // $this->call(StiffenerSeeder::class);
-        $this->call(AngleSeeder::class);
-        // $this->call(CpSeeder::class);
-        // $this->call(FlangeSeeder::class);
+        //$this->call(StiffenerSeeder::class);
+        //$this->call(AngleSeeder::class);
+        //$this->call(CpSeeder::class);
+        //$this->call(FlangeSeeder::class);
+        $this->call(UserSeeder::class);
                
     }
 }

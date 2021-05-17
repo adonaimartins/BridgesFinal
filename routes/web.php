@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 use App\Http\Controllers\BridgeController;
 /*
@@ -112,9 +113,10 @@ Route::get('/web/{id}/edit','App\Http\Controllers\WebController@edit')->name('we
 Route::put('/web/{id}','App\Http\Controllers\WebController@update')->name('webs.update')->middleware('auth');
 Route::delete('/web/{id}','App\Http\Controllers\WebController@destroy')->name('webs.destroy')->middleware('auth');
 
-Auth::routes([
-		'register'=>false
+ Auth::routes([
+    'register'=>false
 ]);
-Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');
 

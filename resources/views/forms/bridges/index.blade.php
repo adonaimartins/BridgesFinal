@@ -38,7 +38,7 @@
                 {{ Form::open(array('url' => 'bridge/' . $value->bridge_id, 'class' => 'pull-right' , 'method' => 'POST')) }}
                     @csrf
                     @method('DELETE') 
-                    {{ Form::submit('Delete this bridge', array('class' => 'btn btn-warning')) }}
+                    {{ Form::submit('Delete this bridge', array('class' => 'btn btn-warning','dusk'=> 'delete-button')) }}
                 {{ Form::close() }}
 
                 <!-- show the bridge (uses the show method found at GET /bridges/{id} -->
